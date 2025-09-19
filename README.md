@@ -1,10 +1,14 @@
 # Crypto EDA
 Exploratory Data Analysis of these 5 crytocurrencies:
--Bitcoin (BTC)
--Ethereum (ETH)
--Solana (SOL)
--Binance (BNB)
--Cardano (ADA)
+Bitcoin (BTC)
+
+Ethereum (ETH)
+
+Solana (SOL)
+
+Binance (BNB)
+
+Cardano (ADA)
 
 ## Highlights
 Price trend (log scale and normalized)
