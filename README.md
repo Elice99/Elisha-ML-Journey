@@ -12,13 +12,18 @@ Cardano (ADA)
 
 ## Highlights
 Price trend (log scale and normalized)
+
 Daily returns and Volitility
+
 Volume vs Price
+
 Correlation heatmap
+
 Trader-Focused insights
 
 ## Tools Used
 Python (pandas, matplotlip, seaborn)
+
 VS Code
 
 ## Conclusion
