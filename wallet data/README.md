@@ -1,5 +1,6 @@
 Crypto Wallet Classifier API
 
+
 Overview
 
 This project implements a machine learning pipeline to classify crypto wallets as either "Good Traders" (🟢) or "Bad Traders" (🔴) based on their transaction history and activity metrics. The trained Logistic Regression model is containerized using Docker and deployed as a high-performance FastAPI service for real-time predictions.
