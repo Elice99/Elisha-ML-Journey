@@ -1,31 +1,57 @@
 import pickle
-from flask import Flask
-from flask import request
-from flask import jsonify
+import numpy as np
+from fastapi import FastAPI
+from pydantic import BaseModel
 
-model_file = 'model_C=1.0.bin'
+# ======================
+# Load model
+# ======================
+model_file = "model_C=1.0.bin"
 
-with open(model_file, 'rb') as f_in:
+with open(model_file, "rb") as f_in:
     dv, model = pickle.load(f_in)
+
+# ======================
+# FastAPI app
+# ======================
+app = FastAPI(
+    title="Customer Churn API",
+    description="Predict customer churn using ML model",
+    version="1.0"
+)
+
+# ======================
+# Input schema (Swagger form)
+# ======================
+class CustomerInput(BaseModel):
+    tenure: int
+    monthly_charges: float
+    total_charges: float
+    contract: str
     
-app = Flask('churn')
-@app.route('/predict', methods=['POST'])
-def predict():
-    customer = request.get_json()
     
-    X = dv.transform([customer])
-    y_pred = model.predict_proba(X)[0, 1]
-    churn = y_pred >= 0.5
-    
-    result ={
-        'churn_probability' : float(y_pred),
-        'churn' : bool(churn)
+@app.get("/")
+def home():
+    return {
+        "status": "running",
+        "message": "Customer Churn Prediction API",
+        "docs": "/docs"
     }
-    return jsonify(result)
+    
+@app.post("/predict")
+def predict(customer: CustomerInput):
 
+    # convert input to dict
+    customer_dict = customer.dict()
 
-if __name__ =='__main__':
-    app.run(debug=True, host='0.0.0.0', port=9696)
-    
-    
-    
+    # transform using your DictVectorizer
+    X = dv.transform([customer_dict])
+
+    # predict probability
+    y_pred = model.predict_proba(X)[0, 1]
+
+    return {
+        "churn_probability": float(y_pred),
+        "churn": y_pred >= 0.5
+    }
+
